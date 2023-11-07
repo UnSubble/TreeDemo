@@ -42,12 +42,40 @@ public class TreeDemo <T extends Comparable<T>> implements Iterable<T>{
 		}
 	}
 	
-	/*public void remove(T val) {
-		if (search(val)) {
-			for (int c : )
-		}			
+	public void remove(T val) {
+		Node target = searchNode(val);
+		if (target != null) {
+			remove(target.left == null ? target.right : target.left, target);
+		}
+			
 	}
-	*/
+	
+	private void remove(Node node, Node target) {
+		if (node == null) {
+			if (target == root) 
+				root = null;
+			else
+				deleteNode(root, target);
+		} else {
+			T temp = node.val;
+			node.val = target.val;
+			target.val = temp;
+			remove(node.left == null ? node.right : node.left, node);
+		}		
+	}
+	
+	private void deleteNode(Node node, Node target) {
+		if (node.left == target)
+			node.left = null;
+		else if (node.right == target)
+			node.right = null;
+		else {
+			if (node.left != null)
+				deleteNode(node.left, target);
+			if (node.right != null)
+				deleteNode(node.right, target);
+		}		
+	}
 	
 	public int getDepth() {
 		return root == null ? 0 : (getDepth(root) + 1);
@@ -76,27 +104,31 @@ public class TreeDemo <T extends Comparable<T>> implements Iterable<T>{
 	}
 	
 	public boolean search(T val) {
-		return root == null ? false : searchLeft(root, val);
+		return root == null ? false : (searchNode(val) != null);
 	}
 	
-	private boolean searchRight(Node node, T val) {
+	private Node searchNode(T val) {
+		return searchLeft(root, val);
+	}
+	
+	private Node searchRight(Node node, T val) {
 		if (node == null) 
-			return false;
+			return null;
 		if (node.val.compareTo(val) > 0)
 			return searchLeft(node.left, val);
 		if (node.val.compareTo(val) < 0)
 			return searchRight(node.right, val);
-		return true;
+		return node;
 	}
 	
-	private boolean searchLeft(Node node, T val) {
+	private Node searchLeft(Node node, T val) {
 		if (node == null) 
-			return false;
+			return null;
 		if (node.val.compareTo(val) > 0)
 			return searchLeft(node.left, val);
 		if (node.val.compareTo(val) < 0)
 			return searchRight(node.right, val);
-		return true;
+		return node;
 	}
 	
 	@Override
@@ -124,5 +156,4 @@ public class TreeDemo <T extends Comparable<T>> implements Iterable<T>{
 	public String toString() {
 		return toList().toString();
 	}
-
 }

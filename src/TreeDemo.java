@@ -19,7 +19,7 @@ public class TreeDemo <T extends Comparable<T>> implements Iterable<T>{
 		@Override
 		public int compareTo(T o) {
 			return val.compareTo(o);
-		}		
+		}
 	}
 	
 	public void insert(T val) {
@@ -114,9 +114,9 @@ public class TreeDemo <T extends Comparable<T>> implements Iterable<T>{
 	private Node searchRight(Node node, T val) {
 		if (node == null) 
 			return null;
-		if (node.val.compareTo(val) > 0)
+		if (node.compareTo(val) > 0)
 			return searchLeft(node.left, val);
-		if (node.val.compareTo(val) < 0)
+		if (node.compareTo(val) < 0)
 			return searchRight(node.right, val);
 		return node;
 	}
@@ -124,9 +124,9 @@ public class TreeDemo <T extends Comparable<T>> implements Iterable<T>{
 	private Node searchLeft(Node node, T val) {
 		if (node == null) 
 			return null;
-		if (node.val.compareTo(val) > 0)
+		if (node.compareTo(val) > 0)
 			return searchLeft(node.left, val);
-		if (node.val.compareTo(val) < 0)
+		if (node.compareTo(val) < 0)
 			return searchRight(node.right, val);
 		return node;
 	}

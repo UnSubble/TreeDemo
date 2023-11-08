@@ -5,7 +5,7 @@ import java.util.List;
 public class TreeDemo <T extends Comparable<T>> implements Iterable<T>{
 	private Node root;
 
-	public class Node implements Comparable<T>{
+	private class Node implements Comparable<T>{
 		public T val;
 		public Node left;
 		public Node right;
@@ -155,10 +155,6 @@ public class TreeDemo <T extends Comparable<T>> implements Iterable<T>{
 		if (node.left != null) toList(node.left, list);
 		list.add(node.val);
 		if (node.right != null) toList(node.right, list);	
-	}
-	
-	public Node getRoot() {
-		return root;
 	}
 	
 	@Override

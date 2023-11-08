@@ -5,7 +5,7 @@ import java.util.List;
 public class TreeDemo <T extends Comparable<T>> implements Iterable<T>{
 	private Node root;
 
-	private class Node implements Comparable<T>{
+	public class Node implements Comparable<T>{
 		public T val;
 		public Node left;
 		public Node right;
@@ -45,36 +45,41 @@ public class TreeDemo <T extends Comparable<T>> implements Iterable<T>{
 	public void remove(T val) {
 		Node target = searchNode(val);
 		if (target != null) {
-			remove(target.left == null ? target.right : target.left, target);
+			Node node = target.right == null ? target.left : target.right;
+			if (target.right != null) {
+				while (node.left != null) 
+					node = node.left;
+				remove(node, target);
+			} else if (target.left != null) {
+				while (node.right != null) 
+					node = node.right;
+				remove(node, target);
+			} else if (target == root)
+				root = null;
 		}
 			
 	}
 	
 	private void remove(Node node, Node target) {
-		if (node == null) {
-			if (target == root) 
-				root = null;
-			else
-				deleteNode(root, target);
-		} else {
-			T temp = node.val;
-			node.val = target.val;
-			target.val = temp;
-			remove(node.left == null ? node.right : node.left, node);
-		}		
+		Node parent = getParent(root, node);
+		if (parent.left == node)
+			parent.left = node.left;
+		else
+			parent.right = node.right;
+		target.val = node.val;		
 	}
 	
-	private void deleteNode(Node node, Node target) {
-		if (node.left == target)
-			node.left = null;
-		else if (node.right == target)
-			node.right = null;
-		else {
-			if (node.left != null)
-				deleteNode(node.left, target);
-			if (node.right != null)
-				deleteNode(node.right, target);
-		}		
+	private Node getParent(Node node, Node target) {
+		if (node.compareTo(target.val) > 0) {
+			if (node.left == target)
+				return node;
+			return getParent(node.left, target);
+		} else {
+			if (node.right == target)
+				return node;
+			return getParent(node.right, target);
+		}
+			
 	}
 	
 	public int getDepth() {
@@ -150,6 +155,10 @@ public class TreeDemo <T extends Comparable<T>> implements Iterable<T>{
 		if (node.left != null) toList(node.left, list);
 		list.add(node.val);
 		if (node.right != null) toList(node.right, list);	
+	}
+	
+	public Node getRoot() {
+		return root;
 	}
 	
 	@Override

@@ -155,6 +155,10 @@ public class TreeDemo <T extends Comparable<T>> implements Iterable<T>{
 		return node;
 	}
 	
+	public boolean isEmpty() {
+		return root == null;
+	}
+	
 	@Override
 	public Iterator<T> iterator() {
 		return toList().iterator();

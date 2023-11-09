@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -28,6 +30,16 @@ public class TreeDemo <T extends Comparable<T>> implements Iterable<T>{
 			return;
 		}
 		insert(root, val);
+	}
+	
+	public void insertAll(Collection<T> vals) {
+		for (T val : vals)
+			insert(val);
+	}
+	
+	public void insertAll(T[] vals) {
+		for (T val : vals)
+			insert(val);
 	}
 	
 	private void insert(Node node, T val) {

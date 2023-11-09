@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -68,6 +67,14 @@ public class TreeDemo <T extends Comparable<T>> implements Iterable<T>{
 				remove(node, target);
 			} else if (target == root)
 				root = null;
+			else {
+				Node parent = getParent(root, target);
+				if (parent.left == target)
+					parent.left = null;
+				else
+					parent.right = null;
+			}
+				
 		}
 			
 	}

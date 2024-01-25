@@ -97,8 +97,7 @@ public class TreeDemo <T extends Comparable<T>> implements Iterable<T>{
 			if (node.right == target)
 				return node;
 			return getParent(node.right, target);
-		}
-			
+		}	
 	}
 	
 	public int getDepth() {
@@ -164,7 +163,37 @@ public class TreeDemo <T extends Comparable<T>> implements Iterable<T>{
 		return toList().iterator();
 	}
 	
-	private List<T> toList() {
+	public List<T> preOrder() {
+		List<T> list = new ArrayList<>();
+		preOrder(root, list);
+		return list;
+	}
+	
+	public List<T> inOrder() {
+		List<T> list = new ArrayList<>();
+		toList(root, list);
+		return list;
+	}
+	
+	public List<T> postOrder() {
+		List<T> list = new ArrayList<>();
+		postOrder(root, list);
+		return list;
+	}
+	
+	private void preOrder(Node node, List<T> list) {
+		list.add(node.val);
+		if (node.left != null) preOrder(node.left, list);
+		if (node.right != null) preOrder(node.right, list);
+	}
+	
+	private void postOrder(Node node, List<T> list) {
+		if (node.left != null) preOrder(node.left, list);
+		if (node.right != null) preOrder(node.right, list);
+		list.add(node.val);
+	}
+	
+	public List<T> toList() {
 		List<T> list = new ArrayList<>();
 		toList(root, list);
 		return list;
